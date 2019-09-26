@@ -15,7 +15,7 @@ def processFrame(frame):
     global skillCheck
     processedFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     #processedFrame = cv2.Canny(processedFrame, threshold1=20, threshold2=300)
-    ret, thresh = cv2.threshold(processedFrame, 245, 255, cv2.THRESH_BINARY)
+    ret, thresh = cv2.threshold(processedFrame, 252, 255, cv2.THRESH_BINARY)
     processedFrame[thresh != 255] = 0
     greatSkillcheckPx = np.sum(thresh == 255)
     lastWhiteCounts[0] = lastWhiteCounts[1]
@@ -26,7 +26,7 @@ def processFrame(frame):
     averageLWC = np.mean(lastWhiteCounts)
     if(averageLWC > 20 and averageLWC < 300):
         skillCheck = True
-    if(skillCheck and lastWhiteCounts[4]+15 < lastWhiteCounts[3]):
+    if(skillCheck and lastWhiteCounts[4]+5 < lastWhiteCounts[3]):
         keyboard.press(Key.space)
         keyboard.release(Key.space)
         skillCheck = False
